@@ -1,6 +1,6 @@
 package ch.ralena.cantika
 
-import ch.ralena.cantika.Contract.MainControllerView
+import ch.ralena.cantika.MainControllerContract.View
 import ch.ralena.cantika.objects.FrequencyWordUtils
 import ch.ralena.cantika.objects.Sentence
 import ch.ralena.cantika.objects.SentenceData
@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.text.Text
 import java.io.IOException
 
-class MainControllerPresenter(private val view: MainControllerView, private var sentenceData: SentenceData) : Contract.MainControllerPresenter {
+class MainControllerPresenter(private val view: View, private var sentenceData: SentenceData) : MainControllerContract.Presenter {
 	// fields
 	private var sentences: ObservableList<Sentence>? = null
 	private var words: ObservableList<Word>? = null
@@ -45,14 +45,8 @@ class MainControllerPresenter(private val view: MainControllerView, private var 
 
 	override fun onSentenceChanged(text: String?) {
 		// update window title with * if a sentence has been modified
-		val title: String
-		if (text == curSentence!!.sentence && !SentenceData.getInstance().isModified) {
-			title = Main.WINDOW_TITLE
-		} else {
-			title = "* " + Main.WINDOW_TITLE
-			SentenceData.getInstance().isModified = true
-		}
-		view.setWindowTitle(title)
+		sentenceData.isModified = text != curSentence!!.sentence || sentenceData.isModified
+		view.setUnsavedChanges(sentenceData.isModified)
 		// change the sentence value
 		curSentence!!.sentence = text
 		view.refreshSentenceListView()

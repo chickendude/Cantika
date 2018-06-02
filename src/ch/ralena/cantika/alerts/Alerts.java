@@ -4,6 +4,7 @@ import ch.ralena.cantika.objects.SentenceData;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,7 +16,7 @@ public class Alerts {
 	public static boolean UnsavedChanges() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Save changes?");
-		alert.setContentText("There are unsaved changes, are you sure you want to exit?");
+		alert.getDialogPane().setContent(new Label("There are unsaved changes, are you sure you want to exit?"));
 		ButtonType saveButton = new ButtonType("Save");
 		ButtonType dontSaveButton = new ButtonType("Don't Save");
 		ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);

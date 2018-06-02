@@ -5,12 +5,13 @@ import ch.ralena.cantika.objects.Word
 import javafx.collections.ObservableList
 import javafx.scene.layout.VBox
 
-interface Contract {
-	interface MainControllerView {
+interface MainControllerContract {
+	interface View {
 		// text
 		fun setAnalysisLabelText(text: String)
 		fun setSentenceEditText(text: String, setFocus: Boolean)
 		fun setWindowTitle(text: String)
+		fun setUnsavedChanges(isChanges: Boolean)
 		// list
 		fun addToSentenceDetailHBox(vBox: VBox)
 		fun refreshSentenceListView()
@@ -21,7 +22,7 @@ interface Contract {
 
 	}
 
-	interface MainControllerPresenter {
+	interface Presenter {
 		fun getSentenceItemText(sentence: Sentence?, empty: Boolean): String?
 		fun getWordItemText(word: Word?, empty: Boolean): String?
 		fun loadSentences()
@@ -29,6 +30,5 @@ interface Contract {
 		fun onSentenceClicked(clickedSentence: Sentence?)
 		fun onSentenceChanged(text: String?)
 		fun saveSentences()
-
 	}
 }

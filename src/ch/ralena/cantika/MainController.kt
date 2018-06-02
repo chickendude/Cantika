@@ -16,14 +16,12 @@ import javafx.scene.control.*
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
-import javafx.scene.text.Text
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
 
-import java.io.IOException
 import java.util.ArrayList
 
-class MainController : Contract.MainControllerView {
+class MainController : MainControllerContract.View {
 	private var words: ObservableList<Word>? = null    // list of all our sentences
 	private var curSentence: Sentence? = null    // currently selected sentence
 	private var curWord: Word? = null    // currently selected word
@@ -201,6 +199,11 @@ class MainController : Contract.MainControllerView {
 	override fun setWindowTitle(text: String) {
 		val primaryStage = sentenceEdit.scene.window as Stage
 		primaryStage.title = text
+	}
+
+	override fun setUnsavedChanges(isChanged: Boolean) {
+		val prefix = if (isChanged) "* " else ""
+		setWindowTitle(prefix + Main.WINDOW_TITLE)
 	}
 
 	override fun setSentenceListViewItems(sentences: ObservableList<Sentence>) {
