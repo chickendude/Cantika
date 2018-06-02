@@ -23,6 +23,38 @@
     -fx-fill-height: true;
 }
 
+.detailhbox .w0 {
+	-fx-text-fill: #FF0000;
+}
+
+.detailhbox .w1 {
+	-fx-text-fill: #DB1600;
+}
+
+.detailhbox .w2 {
+	-fx-text-fill: #B62C00;
+}
+
+.detailhbox .w3 {
+	-fx-text-fill: #924200;
+}
+
+.detailhbox .w4 {
+	-fx-text-fill: #6D5700;
+}
+
+.detailhbox .w5 {
+	-fx-text-fill: #496D00;
+}
+
+.detailhbox .w6 {
+	-fx-text-fill: #248300;
+}
+
+.detailhbox .w7 {
+	-fx-text-fill: #009900;
+}
+
 .vbox {
     -fx-background-color: beige;
 }

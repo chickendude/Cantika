@@ -1,5 +1,6 @@
 package ch.ralena.cantika;
 
+import ch.ralena.cantika.alerts.Alerts;
 import ch.ralena.cantika.objects.*;
 import ch.ralena.cantika.objects.FrequencyWordData;
 import ch.ralena.cantika.objects.Sentence;
@@ -143,24 +144,22 @@ public class MainController {
 		String sentenceAnalysis = null;
 		if (sentenceAnalysis == null || sentenceAnalysis.equals("null")) {
 			sentenceDetailHBox.getChildren().removeAll(sentenceDetailHBox.getChildren());
-			System.out.println(sentenceAnalysis);
 			String[] words = curSentence.getSentence().split(" ");
 			for (String word : words) {
 				FrequencyWord frequencyWord = FrequencyWordData.getInstance().findWord(word);
-				sentenceAnalysis = String.format("%s\n%s\n%s\n%s",
+				sentenceAnalysis = String.format("%s\n%s\n%s",
 						frequencyWord.getLemma(),
-						frequencyWord.getScore(),
 						frequencyWord.getPosition(),
-						"noun, etc.");
+						"---");
 				TextField textField = new TextField(word);
 				// set up textfield's initial width
 				Text text = new Text(word);
 				text.setFont(textField.getFont());
 				textField.setPrefWidth(text.getLayoutBounds().getWidth() + 4d);
 				// set up listener to make text field grow/shrink
-				textField.textProperty().addListener((ov, prevText, currText) -> {
+				textField.textProperty().addListener((ov, prevText, curText) -> {
 					// todo: handle saving changes to root lemma here
-					Text t = new Text(currText);
+					Text t = new Text(curText);
 					text.setFont(textField.getFont()); // Set the same font, so the size is the same
 					double width = t.getLayoutBounds().getWidth() + 4d;
 					textField.setPrefWidth(width); // Set the width
@@ -198,7 +197,7 @@ public class MainController {
 	@FXML
 	public void displayAbout() {
 		System.out.print("about!");
-		sentenceEdit.setText("About!");
+		Alerts.About();
 	}
 
 	@FXML
@@ -220,12 +219,11 @@ public class MainController {
 		String sentenceAnalysis = "";
 		for (String word : words) {
 			FrequencyWord frequencyWord = FrequencyWordData.getInstance().findWord(word);
-			text += String.format("%s - %.3f (%d)\n", frequencyWord.getLemma(), frequencyWord.getScore(), frequencyWord.getPosition());
-			sentenceAnalysis += String.format("%s/%s/%s/%s ",
+			text += String.format("%s - (%d)\n", frequencyWord.getLemma(), frequencyWord.getPosition());
+			sentenceAnalysis += String.format("%s/%s/%s ",
 					frequencyWord.getLemma(),
-					frequencyWord.getScore(),
 					frequencyWord.getPosition(),
-					"noun,determiner,singular");
+					"n, det, sing");
 		}
 		analysisLabel.setText(text);
 	}
