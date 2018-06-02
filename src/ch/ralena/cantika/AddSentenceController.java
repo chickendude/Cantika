@@ -13,7 +13,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class AddSentenceController {
 
-	MainController mMainController;
+	MainController mainController;
 
 	@FXML
 	TextField sentenceTextField;
@@ -35,7 +35,7 @@ public class AddSentenceController {
 			positionTextField.setText(Integer.toString(position + 1));
 		}
 		Sentence sentence = new Sentence(sentenceText);
-		mMainController.addSentence(position, sentence);
+		mainController.addSentence(position, sentence);
 		sentenceTextField.requestFocus();
 	}
 
@@ -55,11 +55,11 @@ public class AddSentenceController {
 
 
 	public void setParentController(MainController mainController) {
-		mMainController = mainController;
+		this.mainController = mainController;
 	}
 
 	public void closeWindow() {
-		mMainController.closeAddSentenceWindow();
+		mainController.closeAddSentenceWindow();
 	}
 
 	public void checkKeyPressed(KeyEvent keyEvent) {

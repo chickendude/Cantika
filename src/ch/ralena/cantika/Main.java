@@ -1,7 +1,7 @@
 package ch.ralena.cantika;
 
 import ch.ralena.cantika.alerts.Alerts;
-import ch.ralena.cantika.objects.FrequencyWordData;
+import ch.ralena.cantika.objects.FrequencyWordUtils;
 import ch.ralena.cantika.objects.SentenceData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -48,7 +48,7 @@ public class Main extends Application {
 		SentenceData sentenceData = SentenceData.getInstance();
 		try {
 			sentenceData.loadSentences();
-			FrequencyWordData.getInstance().loadSentences();
+			FrequencyWordUtils.getInstance().loadSentences();
 		} catch (IOException e) {
 			System.out.println("No sentence save... ignoring.");
 		}

@@ -62,7 +62,7 @@ public class SentenceData {
 		for (Sentence item : sentences) {
 			bw.write(
 					String.format("%s\n",
-					item.getSentence())
+							item.getSentence())
 			);
 		}
 		bw.close();
