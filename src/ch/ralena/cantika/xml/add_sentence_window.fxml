@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Tooltip?>
+<AnchorPane styleClass="anchorpane" stylesheets="@../style/add_sentence.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cantika.AddSentenceController">
+	<children>
+		<VBox spacing="5" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+			<padding>
+				<Insets bottom="5" left="5" right="5" top="5" />
+			</padding>
+			<children>
+				<Label text="Sentence:" />
+				<HBox>
+					<children>
+						<TextField fx:id="positionTextField" alignment="CENTER" onKeyPressed="#checkKeyPressed" prefWidth="35" promptText="last" />
+						<TextField fx:id="sentenceTextField" onKeyPressed="#checkKeyPressed" HBox.hgrow="ALWAYS" />
+					</children>
+				</HBox>
+				<HBox spacing="5">
+					<children>
+						<Button onAction="#addSentence" text="Add">
+							<tooltip>
+								<Tooltip text="Adds the sentence"/>
+							</tooltip>
+						</Button>
+						<Button onAction="#closeWindow" text="Close">
+							<tooltip>
+								<Tooltip text="Closes the window without adding the sentence"/>
+							</tooltip>
+						</Button>
+
+					</children>
+				</HBox>
+				<Label alignment="CENTER" prefWidth="Infinity" text="Please make sure you add the spaces in between words!" wrapText="true" />
+				<Label alignment="CENTER" prefWidth="Infinity" text="Note: Leaving the index box empty will add the sentence to the end of the list" wrapText="true" />
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

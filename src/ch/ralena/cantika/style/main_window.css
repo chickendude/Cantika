@@ -1,0 +1,74 @@
+.background {
+    -fx-background-color: #1d1d1d;
+}
+
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+}
+
+.split-pane {
+    -fx-background-color: #FFFFFF;
+}
+
+.text-field {
+    -fx-background-color: azure;
+    -fx-background-radius: 0;
+    -fx-border-color: cadetblue;
+}
+
+.analysis-label {
+    -fx-alignment: top-left;
+    -fx-padding: 5px;
+    -fx-fill-width: true;
+    -fx-fill-height: true;
+}
+
+.vbox {
+    -fx-background-color: beige;
+}
+
+.hbox {
+    -fx-fill-width: true;
+}
+
+.hbox .button {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: cadetblue;
+    -fx-background-radius: 0;
+    -fx-border-color: cadetblue;
+}
+
+.hbox .button:pressed {
+    -fx-text-fill: #e3e3e3;
+    -fx-background-color: #6aafb1;
+    -fx-border-color: #51888a;
+}
+
+.tooltip {
+    -fx-border-color: cadetblue;
+    -fx-background-color: whitesmoke;
+    -fx-text-fill: #1d1d1d;
+}
+
+.tool-bar .button {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-padding: 3;
+}
+
+.tool-bar .button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+.tool-bar .button:pressed {
+    -fx-border-color: #1d1d1d;
+    -fx-border-radius: 3px;
+    -fx-padding: 2;
+}
+
+.detailhbox .text-field {
+    -fx-padding: 0;
+    -fx-margin: 0;
+    -fx-background-color: #00000000;
+    -fx-background-radius: 0;
+    -fx-border-color: #00000000;
+}
