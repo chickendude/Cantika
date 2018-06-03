@@ -2,9 +2,9 @@ package ch.ralena.cantika
 
 import ch.ralena.cantika.alerts.Alerts
 import ch.ralena.cantika.objects.*
-import ch.ralena.cantika.objects.FrequencyWordData
+import ch.ralena.cantika.utils.FrequencyWordData
 import ch.ralena.cantika.objects.Sentence
-import ch.ralena.cantika.objects.SentenceData
+import ch.ralena.cantika.utils.SentenceData
 import javafx.application.Platform
 import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableList
@@ -51,7 +51,7 @@ class MainController : MainControllerContract.View {
 	private lateinit var sentenceDetailHBox: FlowPane
 
 	fun initialize() {
-		presenter = MainControllerPresenter(this, SentenceData.instance, FrequencyWordData.getInstance())
+		presenter = MainControllerPresenter(this, SentenceData.instance, FrequencyWordData.instance)
 
 		setupSentenceListView()
 		setupWordListViews()
@@ -147,7 +147,7 @@ class MainController : MainControllerContract.View {
 		var text = ""
 		var sentenceAnalysis = ""
 		for (word in words) {
-			val frequencyWord = FrequencyWordData.getInstance().findWord(word)
+			val frequencyWord = FrequencyWordData.instance.findWord(word)
 			text += String.format("%s - (%d)\n", frequencyWord.word, frequencyWord.index)
 			sentenceAnalysis += String.format("%s/%s/%s ",
 					frequencyWord.word,
@@ -165,6 +165,11 @@ class MainController : MainControllerContract.View {
 						primaryStage,
 						WindowEvent.WINDOW_CLOSE_REQUEST
 				))
+	}
+
+	@FXML
+	fun refreshWordCounts() {
+		presenter.onRefreshButtonClicked()
 	}
 
 	@FXML

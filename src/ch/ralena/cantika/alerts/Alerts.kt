@@ -1,13 +1,12 @@
 package ch.ralena.cantika.alerts
 
-import ch.ralena.cantika.objects.SentenceData
+import ch.ralena.cantika.utils.SentenceData
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonBar
 import javafx.scene.control.ButtonType
 import javafx.scene.control.Label
 
 import java.io.IOException
-import java.util.Optional
 
 /**
  * Created by crater-windoze on 1/11/2017.

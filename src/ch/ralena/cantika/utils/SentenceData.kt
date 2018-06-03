@@ -1,18 +1,15 @@
-package ch.ralena.cantika.objects
+package ch.ralena.cantika.utils
 
+import ch.ralena.cantika.objects.Sentence
+import ch.ralena.cantika.objects.Word
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 
-import java.io.BufferedReader
-import java.io.BufferedWriter
 import java.io.IOException
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.Collections
 import java.util.Comparator
 import java.util.HashMap
-import java.util.function.ToIntFunction
 
 class SentenceData {
 	// fields
@@ -33,11 +30,6 @@ class SentenceData {
 		val wordMap = HashMap<String, Int>()
 		var input: String? = br.readLine()
 		while (input != null) {
-//			for (word in input.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-//				var timesSeen = (wordMap).getOrDefault(word, 0)
-//				timesSeen++
-//				wordMap[word] = timesSeen
-//			}
 			val sentence = Sentence(input)
 			sentences.add(sentence)
 			input = br.readLine()
@@ -62,7 +54,7 @@ class SentenceData {
 	fun countWords() {
 		val wordMap = HashMap<String, Int>()
 		sentences.forEach {
-			it.sentence.split(" ").forEach {
+			it.sentence.split(" ").distinct().forEach {
 				var timesSeen = (wordMap).getOrDefault(it, 0)
 				timesSeen++
 				wordMap[it] = timesSeen

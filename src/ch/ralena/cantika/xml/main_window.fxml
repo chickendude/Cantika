@@ -95,6 +95,16 @@
 							</ImageView>
 						</graphic>
 					</Button>
+					<Button mnemonicParsing="false" onAction="#refreshWordCounts" text="Refresh Counts">
+						<tooltip>
+							<Tooltip text="Refresh the word counts"/>
+						</tooltip>
+						<graphic>
+							<ImageView preserveRatio="true">
+								<Image requestedHeight="16" requestedWidth="16" url="@../drawable/icon_refresh.png"/>
+							</ImageView>
+						</graphic>
+					</Button>
 				</HBox>
 			</ToolBar>
 		</VBox>

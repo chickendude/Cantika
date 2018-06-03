@@ -32,6 +32,7 @@ interface MainControllerContract {
 		fun loadWords()
 		fun onSentenceClicked(clickedSentence: Sentence?)
 		fun onSentenceChanged(text: String?)
+		fun onRefreshButtonClicked()
 		fun saveSentences()
 	}
 }

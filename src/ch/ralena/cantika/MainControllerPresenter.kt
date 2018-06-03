@@ -2,6 +2,8 @@ package ch.ralena.cantika
 
 import ch.ralena.cantika.MainControllerContract.View
 import ch.ralena.cantika.objects.*
+import ch.ralena.cantika.utils.FrequencyWordData
+import ch.ralena.cantika.utils.SentenceData
 import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.control.Label
@@ -50,11 +52,14 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		view.setUnsavedChanges(sentenceData.isModified)
 		// change the sentence value
 		curSentence!!.sentence = text!!
-		sentenceData.countWords()
 		view.refreshSentenceListView()
 		loadAnalysisData()
 	}
 
+	override fun onRefreshButtonClicked() {
+		sentenceData.countWords()
+		frequencyWordData.countWords(sentences)
+	}
 
 	// get text
 
