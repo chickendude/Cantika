@@ -51,7 +51,7 @@ class MainController : MainControllerContract.View {
 	private lateinit var sentenceDetailHBox: FlowPane
 
 	fun initialize() {
-		presenter = MainControllerPresenter(this, SentenceData.getInstance(), FrequencyWordData.getInstance())
+		presenter = MainControllerPresenter(this, SentenceData.instance, FrequencyWordData.getInstance())
 
 		setupSentenceListView()
 		setupWordListViews()
@@ -62,7 +62,7 @@ class MainController : MainControllerContract.View {
 
 		curSentence = null
 		originalValue = sentenceEdit.text
-		words = SentenceData.getInstance().words
+		words = SentenceData.instance.words
 	}
 
 
@@ -142,7 +142,7 @@ class MainController : MainControllerContract.View {
 
 	@FXML
 	fun analyzeText() {
-		SentenceData.getInstance().isModified = true
+		SentenceData.instance.isModified = true
 		val words = curSentence!!.sentence.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 		var text = ""
 		var sentenceAnalysis = ""
@@ -199,7 +199,7 @@ class MainController : MainControllerContract.View {
 		}
 		sentenceListView.scrollTo(sentence)
 		// mark window as modified
-		SentenceData.getInstance().isModified = true
+		SentenceData.instance.isModified = true
 		setWindowTitle("* " + Main.WINDOW_TITLE)
 	}
 

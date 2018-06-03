@@ -49,7 +49,8 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		sentenceData.isModified = text != curSentence!!.sentence || sentenceData.isModified
 		view.setUnsavedChanges(sentenceData.isModified)
 		// change the sentence value
-		curSentence!!.sentence = text
+		curSentence!!.sentence = text!!
+		sentenceData.countWords()
 		view.refreshSentenceListView()
 		loadAnalysisData()
 	}

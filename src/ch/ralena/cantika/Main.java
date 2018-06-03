@@ -31,8 +31,8 @@ public class Main extends Application {
 		// confirm before closing if there have been changes
 		primaryStage.setOnCloseRequest(event -> {
 			mainController.closeAddSentenceWindow();
-			if (SentenceData.getInstance().isModified()) {
-				if (!Alerts.UnsavedChanges()) {
+			if (SentenceData.Companion.getInstance().isModified()) {
+				if (!Alerts.INSTANCE.UnsavedChanges()) {
 					event.consume();
 				}
 			}
@@ -45,7 +45,7 @@ public class Main extends Application {
 	@Override
 	public void init() throws Exception {
 		// load our sentence data on opening the program
-		SentenceData sentenceData = SentenceData.getInstance();
+		SentenceData sentenceData = SentenceData.Companion.getInstance();
 		FrequencyWordData frequencyWordUtils = FrequencyWordData.getInstance();
 		try {
 			sentenceData.loadSentences();
