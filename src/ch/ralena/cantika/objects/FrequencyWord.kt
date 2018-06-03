@@ -1,3 +1,3 @@
 package ch.ralena.cantika.objects
 
-class FrequencyWord(var lemma: String?, val position: Int)
+class FrequencyWord(var word: String, val index: Int)

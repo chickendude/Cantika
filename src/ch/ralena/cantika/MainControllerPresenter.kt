@@ -1,9 +1,7 @@
 package ch.ralena.cantika
 
 import ch.ralena.cantika.MainControllerContract.View
-import ch.ralena.cantika.objects.Sentence
-import ch.ralena.cantika.objects.SentenceData
-import ch.ralena.cantika.objects.Word
+import ch.ralena.cantika.objects.*
 import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.control.Label
@@ -12,10 +10,11 @@ import javafx.scene.text.TextAlignment
 import java.io.IOException
 import kotlin.math.min
 
-class MainControllerPresenter(private val view: View, private var sentenceData: SentenceData) : MainControllerContract.Presenter {
+class MainControllerPresenter(private val view: View, private var sentenceData: SentenceData, private val frequencyWordData: FrequencyWordData) : MainControllerContract.Presenter {
 	// fields
 	private lateinit var sentences: ObservableList<Sentence>
 	private var words: ObservableList<Word>? = null
+	private var frequencyWords: ObservableList<FrequencyWord>? = null
 	private var curSentence: Sentence? = null
 
 	init {
@@ -31,10 +30,12 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun loadWords() {
 		words = sentenceData.words
-		view.setWordListViewItems(words!!)
+		frequencyWords = frequencyWordData.frequencyWords
+		view.setCourseWordListViewItems(words!!)
+		view.setFrequencyWordListViewItems(frequencyWordData.frequencyWords!!)
 	}
 
-	// on ...
+	// listeners
 
 	override fun onSentenceClicked(clickedSentence: Sentence?) {
 		if (clickedSentence != null) {
@@ -66,8 +67,17 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun getWordItemText(word: Word?, empty: Boolean): String? {
 		var text: String? = null
-		if (!empty && word != null && word.word != null) {
+		if (!empty && word != null) {
 			text = String.format("%d) %s - %d", words!!.indexOf(word) + 1, word.word.replace(" ", ""), word.count)
+		}
+		return text
+	}
+
+	override fun getFrequencyWordItemText(word: FrequencyWord?, empty: Boolean): String? {
+		var text: String? = null
+		if (!empty && word != null) {
+			val timesUsed = countTimesUsed(word.word, sentences.size)
+			text = String.format("%d) %s - %d", word.index, word.word.replace(" ", ""), timesUsed)
 		}
 		return text
 	}
@@ -91,7 +101,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 			view.clearSentenceDetailHBox()
 			val words = curSentence!!.sentence.split(" ")
 			for (word in words) {
-				val timesUsed = countTimesUsed(word)
+				val timesUsed = countTimesUsed(word, sentences.indexOf(curSentence))
 				sentenceAnalysis = "" + timesUsed
 
 				// set up textfield's initial width
@@ -129,8 +139,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		view.setAnalysisLabelText(text)
 	}
 
-	private fun countTimesUsed(word: String): Int {
-		val index = sentences.indexOf(curSentence)
+	private fun countTimesUsed(word: String, index: Int): Int {
 		var count = 0
 		sentences.subList(0, index).forEach {
 			if (it.sentence.split(" ").contains(word)) {

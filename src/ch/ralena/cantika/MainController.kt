@@ -2,7 +2,7 @@ package ch.ralena.cantika
 
 import ch.ralena.cantika.alerts.Alerts
 import ch.ralena.cantika.objects.*
-import ch.ralena.cantika.objects.FrequencyWordUtils
+import ch.ralena.cantika.objects.FrequencyWordData
 import ch.ralena.cantika.objects.Sentence
 import ch.ralena.cantika.objects.SentenceData
 import javafx.application.Platform
@@ -15,7 +15,6 @@ import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
-import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
@@ -39,7 +38,9 @@ class MainController : MainControllerContract.View {
 	@FXML
 	private lateinit var sentenceListView: ListView<Sentence>
 	@FXML
-	private lateinit var wordListView: ListView<Word>
+	private lateinit var courseWordListView: ListView<Word>
+	@FXML
+	private lateinit var frequencyWordListView: ListView<FrequencyWord>
 	@FXML
 	private lateinit var analysisLabel: Label
 	@FXML
@@ -50,10 +51,10 @@ class MainController : MainControllerContract.View {
 	private lateinit var sentenceDetailHBox: FlowPane
 
 	fun initialize() {
-		presenter = MainControllerPresenter(this, SentenceData.getInstance())
+		presenter = MainControllerPresenter(this, SentenceData.getInstance(), FrequencyWordData.getInstance())
 
 		setupSentenceListView()
-		setupWordListView()
+		setupWordListViews()
 		setupSentenceEdit()
 
 		presenter.loadSentences()
@@ -82,9 +83,10 @@ class MainController : MainControllerContract.View {
 		}
 	}
 
-	private fun setupWordListView() {
-		wordListView.selectionModel.selectionMode = SelectionMode.MULTIPLE
-		wordListView.setCellFactory { param ->
+	private fun setupWordListViews() {
+		// --- course ---
+		courseWordListView.selectionModel.selectionMode = SelectionMode.MULTIPLE
+		courseWordListView.setCellFactory { param ->
 			object : ListCell<Word>() {
 				override fun updateItem(word: Word?, empty: Boolean) {
 					super.updateItem(item, empty)
@@ -93,9 +95,28 @@ class MainController : MainControllerContract.View {
 			}
 		}
 		// create click listener for words
-		wordListView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
+		courseWordListView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
 			if (newValue != null) {
-				val clickedWord = wordListView.selectionModel.selectedItem
+				val clickedWord = courseWordListView.selectionModel.selectedItem
+				curWord = clickedWord
+				// todo: only show sentences with selected word
+			}
+		}
+
+		// --- frequency ---
+		frequencyWordListView.selectionModel.selectionMode = SelectionMode.MULTIPLE
+		frequencyWordListView.setCellFactory { param ->
+			object : ListCell<FrequencyWord>() {
+				override fun updateItem(word: FrequencyWord?, empty: Boolean) {
+					super.updateItem(item, empty)
+					text = presenter.getFrequencyWordItemText(word, empty)
+				}
+			}
+		}
+		// create click listener for words
+		courseWordListView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
+			if (newValue != null) {
+				val clickedWord = courseWordListView.selectionModel.selectedItem
 				curWord = clickedWord
 				// todo: only show sentences with selected word
 			}
@@ -126,11 +147,11 @@ class MainController : MainControllerContract.View {
 		var text = ""
 		var sentenceAnalysis = ""
 		for (word in words) {
-			val frequencyWord = FrequencyWordUtils.getInstance().findWord(word)
-			text += String.format("%s - (%d)\n", frequencyWord.lemma, frequencyWord.position)
+			val frequencyWord = FrequencyWordData.getInstance().findWord(word)
+			text += String.format("%s - (%d)\n", frequencyWord.word, frequencyWord.index)
 			sentenceAnalysis += String.format("%s/%s/%s ",
-					frequencyWord.lemma,
-					frequencyWord.position,
+					frequencyWord.word,
+					frequencyWord.index,
 					"n, det, sing")
 		}
 		analysisLabel.text = text
@@ -211,8 +232,12 @@ class MainController : MainControllerContract.View {
 		sentenceListView.items = sentences
 	}
 
-	override fun setWordListViewItems(words: ObservableList<Word>) {
-		wordListView.items = words
+	override fun setCourseWordListViewItems(words: ObservableList<Word>) {
+		courseWordListView.items = words
+	}
+
+	override fun setFrequencyWordListViewItems(words: ObservableList<FrequencyWord>) {
+		frequencyWordListView.items = words
 	}
 
 	override fun setSentenceEditText(text: String, setFocus: Boolean) {

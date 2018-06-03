@@ -21,7 +21,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.FlowPane?>
-<BorderPane stylesheets="@../style/main_window.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ralena.cantika.MainController">
+<BorderPane stylesheets="@../style/main_window.css" xmlns="http://javafx.com/javafx/8.0.121"
+			xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ralena.cantika.MainController">
 	<top>
 		<VBox BorderPane.alignment="CENTER">
 			<MenuBar>
@@ -30,18 +31,21 @@
 						<items>
 							<MenuItem text="_New">
 								<accelerator>
-									<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+									<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP"
+														shortcut="UP"/>
 								</accelerator>
 							</MenuItem>
-							<MenuItem text="_Open" />
+							<MenuItem text="_Open"/>
 							<MenuItem onAction="#saveSentences" text="_Save">
 								<accelerator>
-									<KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+									<KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP"
+														shortcut="UP"/>
 								</accelerator>
 							</MenuItem>
 							<MenuItem onAction="#exitProgram" text="_Quit">
 								<accelerator>
-									<KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+									<KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP"
+														shortcut="UP"/>
 								</accelerator>
 							</MenuItem>
 						</items>
@@ -50,19 +54,21 @@
 						<items>
 							<MenuItem mnemonicParsing="true" onAction="#openAddSentenceWindow" text="_Add">
 								<accelerator>
-									<KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+									<KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP"
+														shortcut="UP"/>
 								</accelerator>
 							</MenuItem>
 							<MenuItem mnemonicParsing="true" onAction="#deleteSentences" text="_Delete">
 								<accelerator>
-									<KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP" />
+									<KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP"
+														shortcut="UP"/>
 								</accelerator>
 							</MenuItem>
 						</items>
 					</Menu>
 					<Menu mnemonicParsing="true" text="Help">
 						<items>
-							<MenuItem mnemonicParsing="false" onAction="#displayAbout" text="About" />
+							<MenuItem mnemonicParsing="false" onAction="#displayAbout" text="About"/>
 						</items>
 					</Menu>
 				</menus>
@@ -71,21 +77,21 @@
 				<HBox>
 					<Button onAction="#openAddSentenceWindow" text="Add">
 						<tooltip>
-							<Tooltip text="Add sentences" />
+							<Tooltip text="Add sentences"/>
 						</tooltip>
 						<graphic>
 							<ImageView preserveRatio="true">
-								<Image requestedHeight="16" requestedWidth="16" url="@../drawable/icon_add.png" />
+								<Image requestedHeight="16" requestedWidth="16" url="@../drawable/icon_add.png"/>
 							</ImageView>
 						</graphic>
 					</Button>
 					<Button mnemonicParsing="false" onAction="#deleteSentences" text="Delete">
 						<tooltip>
-							<Tooltip text="Delete sentences" />
+							<Tooltip text="Delete sentences"/>
 						</tooltip>
 						<graphic>
 							<ImageView preserveRatio="true">
-								<Image requestedHeight="16" requestedWidth="16" url="@../drawable/icon_delete.png" />
+								<Image requestedHeight="16" requestedWidth="16" url="@../drawable/icon_delete.png"/>
 							</ImageView>
 						</graphic>
 					</Button>
@@ -96,42 +102,57 @@
 	<center>
 		<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
 			<children>
-				<SplitPane fx:id="splitPaneLeft" dividerPositions="0.2, 0.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-					<AnchorPane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false" />
+				<SplitPane fx:id="splitPaneLeft" dividerPositions="0.2, 0.8" AnchorPane.bottomAnchor="0.0"
+						   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<AnchorPane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false"/>
 					<SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="960.0">
-						<ListView fx:id="sentenceListView" />
+						<ListView fx:id="sentenceListView"/>
 						<AnchorPane minHeight="0.0" minWidth="30.0">
-							<VBox styleClass="vbox" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+							<VBox styleClass="vbox" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+								  AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 								<HBox styleClass="hbox">
-									<TextField fx:id="sentenceEdit" HBox.hgrow="ALWAYS" />
-									<Button mnemonicParsing="false" onAction="#analyzeText" text="Analyze" />
+									<TextField fx:id="sentenceEdit" HBox.hgrow="ALWAYS"/>
+									<Button mnemonicParsing="false" onAction="#analyzeText" text="Analyze"/>
 								</HBox>
 								<FlowPane fx:id="sentenceDetailHBox" styleClass="detailhbox" prefWrapLength="Infinity">
 								</FlowPane>
-								<Label fx:id="analysisLabel" maxHeight="Infinity" maxWidth="Infinity" styleClass="analysis-label" VBox.vgrow="ALWAYS" />
+								<Label fx:id="analysisLabel" maxHeight="Infinity" maxWidth="Infinity"
+									   styleClass="analysis-label" VBox.vgrow="ALWAYS"/>
 							</VBox>
 						</AnchorPane>
 					</SplitPane>
-					<AnchorPane fx:id="paneRight" maxHeight="Infinity" prefWidth="200.0" SplitPane.resizableWithParent="false">
+					<AnchorPane fx:id="paneRight" maxHeight="Infinity" prefWidth="200.0"
+								SplitPane.resizableWithParent="false">
 						<children>
-                     <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                       <tabs>
-                         <Tab text="Course">
-                              <content>
-                                 <AnchorPane>
-                                    <children>
-                  							<ListView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:id="wordListView" />
-                                    </children>
-                                 </AnchorPane>
-                              </content>
-                         </Tab>
-                         <Tab text="Subtitles">
-                           <content>
-                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                           </content>
-                         </Tab>
-                       </tabs>
-                     </TabPane>
+							<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+									 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+									 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+								<tabs>
+									<Tab text="Course">
+										<content>
+											<AnchorPane>
+												<children>
+													<ListView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+															  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+															  fx:id="courseWordListView"/>
+												</children>
+											</AnchorPane>
+										</content>
+									</Tab>
+									<Tab text="Frequency">
+										<content>
+											<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+														prefWidth="200.0">
+												<children>
+													<ListView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+															  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+															  fx:id="frequencyWordListView"/>
+												</children>
+											</AnchorPane>
+										</content>
+									</Tab>
+								</tabs>
+							</TabPane>
 						</children>
 					</AnchorPane>
 				</SplitPane>
