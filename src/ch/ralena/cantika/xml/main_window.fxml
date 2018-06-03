@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.FlowPane?>
 <BorderPane stylesheets="@../style/main_window.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ralena.cantika.MainController">
 	<top>
 		<VBox BorderPane.alignment="CENTER">
@@ -105,8 +106,8 @@
 									<TextField fx:id="sentenceEdit" HBox.hgrow="ALWAYS" />
 									<Button mnemonicParsing="false" onAction="#analyzeText" text="Analyze" />
 								</HBox>
-								<HBox fx:id="sentenceDetailHBox" styleClass="detailhbox">
-								</HBox>
+								<FlowPane fx:id="sentenceDetailHBox" styleClass="detailhbox" prefWrapLength="Infinity">
+								</FlowPane>
 								<Label fx:id="analysisLabel" maxHeight="Infinity" maxWidth="Infinity" styleClass="analysis-label" VBox.vgrow="ALWAYS" />
 							</VBox>
 						</AnchorPane>

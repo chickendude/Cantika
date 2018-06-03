@@ -14,6 +14,7 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.FlowPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
@@ -46,7 +47,7 @@ class MainController : MainControllerContract.View {
 	@FXML
 	private val paneRight: AnchorPane? = null
 	@FXML
-	private lateinit var sentenceDetailHBox: HBox
+	private lateinit var sentenceDetailHBox: FlowPane
 
 	fun initialize() {
 		presenter = MainControllerPresenter(this, SentenceData.getInstance())

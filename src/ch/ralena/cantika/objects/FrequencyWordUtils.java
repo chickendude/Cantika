@@ -14,13 +14,11 @@ import java.nio.file.Paths;
  */
 public class FrequencyWordUtils {
 	private static FrequencyWordUtils instance = new FrequencyWordUtils();
-	private static int total_lemmas = 13302602;
 
 	private ObservableList<FrequencyWord> dictionary;
 
 	public FrequencyWord findWord(String word) {
 		word = word.toLowerCase();
-		word = word.replaceAll("^[^a-zA-Z0-9\\s]+|[^a-zA-Z0-9\\s]+$", "");
 		FrequencyWord entry = new FrequencyWord(word, 0);
 		for (FrequencyWord frequencyWord : dictionary) {
 			if (word.equals(frequencyWord.getLemma())) {
