@@ -1,7 +1,6 @@
 package ch.ralena.cantika
 
 import ch.ralena.cantika.MainControllerContract.View
-import ch.ralena.cantika.objects.FrequencyWordUtils
 import ch.ralena.cantika.objects.Sentence
 import ch.ralena.cantika.objects.SentenceData
 import ch.ralena.cantika.objects.Word
@@ -9,8 +8,6 @@ import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
-import javafx.scene.text.Font
-import javafx.scene.text.Text
 import javafx.scene.text.TextAlignment
 import java.io.IOException
 import kotlin.math.min
@@ -94,34 +91,19 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 			view.clearSentenceDetailHBox()
 			val words = curSentence!!.sentence.split(" ")
 			for (word in words) {
-				val frequencyWord = FrequencyWordUtils.getInstance().findWord(word)
 				val timesUsed = countTimesUsed(word)
-				sentenceAnalysis = String.format("%d\n%d", frequencyWord.position, timesUsed)
+				sentenceAnalysis = "" + timesUsed
 
 				// set up textfield's initial width
-				val style = "w" + min(timesUsed, 7)
 				val wordLabel = Label(word)
-				wordLabel.font = Font.font(20.0)
-				wordLabel.styleClass.add(style)
-				val text = Text(word)
-				text.font = wordLabel.font
-//				wordLabel.prefWidth = text.layoutBounds.width + 14.0
-//				// set up listener to make text field grow/shrink
-//				wordLabel.textProperty().addListener { ov, prevText, curText ->
-//					// todo: handle saving changes to root lemma here
-//					val t = Text(curText)
-//					t.font = wordLabel.font // Set the same font, so the size is the same
-//					t.styleClass.addAll(wordLabel.styleClass)
-//					val width = t.layoutBounds.width + 14.0
-////					wordLabel.prefWidth = width // Set the width
-////					wordLabel.positionCaret(wordLabel.caretPosition) // If you remove this line, it flashes a little bit
-//				}
-				val lemmaData = Label(sentenceAnalysis)
-				lemmaData.alignment = Pos.CENTER
-				lemmaData.textAlignment = TextAlignment.CENTER
+				wordLabel.styleClass.add("w" + min(timesUsed, 7)) // w1-7
+
+				val timesUsedLabel = Label(sentenceAnalysis)
+				timesUsedLabel.styleClass.add("times-label")
+				timesUsedLabel.textAlignment = TextAlignment.CENTER
 				val vBox = VBox()
 				vBox.alignment = Pos.CENTER
-				vBox.children.addAll(wordLabel, lemmaData)
+				vBox.children.addAll(wordLabel, timesUsedLabel)
 				vBox.spacing = 0.0
 				view.addToSentenceDetailHBox(vBox)
 			}
