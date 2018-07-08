@@ -65,7 +65,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun getSentenceItemText(sentence: Sentence?, empty: Boolean): String? {
 		var text: String? = null
-		if (!empty && sentence != null && sentence.sentence != null) {
+		if (!empty && sentence != null) {
 			text = (sentences.indexOf(sentence) + 1).toString() + ") " + sentence.sentence.replace(" ", "")
 		}
 		return text
