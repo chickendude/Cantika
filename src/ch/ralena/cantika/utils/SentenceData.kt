@@ -27,7 +27,6 @@ class SentenceData {
 
 		// load sentences and split count the words
 		println(String.format("Opening %s...", filename))
-		val wordMap = HashMap<String, Int>()
 		var input: String? = br.readLine()
 		while (input != null) {
 			val sentence = Sentence(input)
@@ -55,14 +54,19 @@ class SentenceData {
 		val wordMap = HashMap<String, Int>()
 		sentences.forEach {
 			it.sentence.split(" ").distinct().forEach {
-				var timesSeen = (wordMap).getOrDefault(it, 0)
+				val word = cleanWord(it)
+				var timesSeen = wordMap.getOrDefault(word, 0)
 				timesSeen++
-				wordMap[it] = timesSeen
+				wordMap[word] = timesSeen
 			}
 		}
 		words.clear()
 		wordMap.forEach { word, count -> words.add(Word(word, count)) }
 		words.sortWith(Comparator.comparingInt<Word>({ it.count }).reversed())
+	}
+
+	fun cleanWord(word: String):String {
+		return word.replace(Regex("[，？！。]"),"")
 	}
 
 	companion object {
