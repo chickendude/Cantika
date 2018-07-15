@@ -55,9 +55,11 @@ class SentenceData {
 		sentences.forEach {
 			it.sentence.split(" ").distinct().forEach {
 				val word = cleanWord(it)
-				var timesSeen = wordMap.getOrDefault(word, 0)
-				timesSeen++
-				wordMap[word] = timesSeen
+				if (!word.contains("_")) {
+					var timesSeen = wordMap.getOrDefault(word, 0)
+					timesSeen++
+					wordMap[word] = timesSeen
+				}
 			}
 		}
 		words.clear()

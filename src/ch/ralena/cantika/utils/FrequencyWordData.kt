@@ -53,20 +53,14 @@ class FrequencyWordData {
 	}
 
 	fun countWords(sentences: ObservableList<Sentence>) {
-		val wordMap = hashMapOf<FrequencyWord, Int>()
 		sentences.forEach {
 			it.sentence.split(" ").distinct().forEach { word: String ->
-				val list = frequencyWords.filter {it.word == word }
-				if (list.isNotEmpty()) {
-					val frequencyWord = list.single()
-					var timesSeen = wordMap.getOrDefault(frequencyWord, 0)
-					timesSeen++
-					wordMap[frequencyWord] = timesSeen
+				val wordList = frequencyWords.filter {it.word == word }
+				if (wordList.isNotEmpty()) {
+					wordList.first().count++
 				}
 			}
 		}
-		frequencyWords.clear()
-		wordMap.forEach { frequencyWord, count -> frequencyWords.add(FrequencyWord(frequencyWord.word, frequencyWord.index, frequencyWord.count)) }
 		frequencyWords.sortWith(Comparator.comparingInt<FrequencyWord>({ it.index }))
 	}
 

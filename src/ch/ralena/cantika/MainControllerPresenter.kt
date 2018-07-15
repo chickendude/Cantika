@@ -84,6 +84,8 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		if (!empty && word != null) {
 			val timesUsed = countTimesUsed(word.word, sentences.size)
 			text = String.format("%d) %s - %d", word.index, word.word.replace(" ", ""), timesUsed)
+		} else if (word != null) {
+			text = String.format("%d) %s - %d", word.index, word.word.replace(" ", ""), 0)
 		}
 		return text
 	}
