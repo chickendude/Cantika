@@ -11,6 +11,8 @@ import java.nio.file.Paths
 import java.util.Comparator
 import java.util.HashMap
 
+val CLEAN_WORD = Regex("[，？！。]")
+
 class SentenceData {
 	// fields
 	lateinit var sentences: ObservableList<Sentence>
@@ -68,7 +70,7 @@ class SentenceData {
 	}
 
 	fun cleanWord(word: String):String {
-		return word.replace(Regex("[，？！。]"),"")
+		return word.replace(CLEAN_WORD,"")
 	}
 
 	companion object {

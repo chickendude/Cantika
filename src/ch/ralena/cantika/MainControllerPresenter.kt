@@ -2,6 +2,7 @@ package ch.ralena.cantika
 
 import ch.ralena.cantika.MainControllerContract.View
 import ch.ralena.cantika.objects.*
+import ch.ralena.cantika.utils.CLEAN_WORD
 import ch.ralena.cantika.utils.FrequencyWordData
 import ch.ralena.cantika.utils.SentenceData
 import javafx.collections.ObservableList
@@ -148,9 +149,10 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 	}
 
 	private fun countTimesUsed(word: String, index: Int): Int {
+		val clean_word = word.replace(CLEAN_WORD, "")
 		var count = 0
 		sentences.subList(0, index).forEach {
-			if (it.sentence.split(" ").contains(word)) {
+			if (it.sentence.replace(CLEAN_WORD, "").split(" ").contains(clean_word)) {
 				count++
 			}
 		}
