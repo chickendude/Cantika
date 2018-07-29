@@ -11,7 +11,7 @@ import java.nio.file.Paths
 import java.util.Comparator
 import java.util.HashMap
 
-val CLEAN_WORD = Regex("[，？！。]")
+val CLEAN_WORD = Regex("[，？！。“”-]")
 
 class SentenceData {
 	// fields
