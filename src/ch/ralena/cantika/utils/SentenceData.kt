@@ -69,11 +69,12 @@ class SentenceData {
 		words.sortWith(Comparator.comparingInt<Word>({ it.count }).reversed())
 	}
 
-	fun cleanWord(word: String):String {
-		return word.replace(CLEAN_WORD,"")
-	}
 
 	companion object {
+		fun cleanWord(word: String):String {
+			return word.replace(CLEAN_WORD,"")
+		}
+
 		var instance = SentenceData()
 		private val filename = "sentences.csv"
 	}

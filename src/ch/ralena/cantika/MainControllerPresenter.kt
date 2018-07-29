@@ -5,6 +5,7 @@ import ch.ralena.cantika.objects.*
 import ch.ralena.cantika.utils.CLEAN_WORD
 import ch.ralena.cantika.utils.FrequencyWordData
 import ch.ralena.cantika.utils.SentenceData
+import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.control.Label
@@ -14,11 +15,14 @@ import java.io.IOException
 import kotlin.math.min
 
 class MainControllerPresenter(private val view: View, private var sentenceData: SentenceData, private val frequencyWordData: FrequencyWordData) : MainControllerContract.Presenter {
+
 	// fields
 	private lateinit var sentences: ObservableList<Sentence>
-	private var words: ObservableList<Word>? = null
+
+	private var words: ObservableList<Word> = FXCollections.emptyObservableList()
 	private var frequencyWords: ObservableList<FrequencyWord>? = null
 	private var curSentence: Sentence? = null
+
 
 	init {
 		sentenceData.isModified = false
@@ -32,10 +36,12 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 	}
 
 	override fun loadWords() {
-		words = sentenceData.words
+		words = FXCollections.observableArrayList()
+		words.add(Word("", 0))
+		words.addAll(sentenceData.words)
 		frequencyWords = frequencyWordData.frequencyWords
-		view.setCourseWordListViewItems(words!!)
-		view.setFrequencyWordListViewItems(frequencyWordData.frequencyWords!!)
+		view.setCourseWordListViewItems(words)
+		view.setFrequencyWordListViewItems(frequencyWordData.frequencyWords)
 	}
 
 	// listeners
@@ -62,6 +68,17 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		frequencyWordData.countWords(sentences)
 	}
 
+	override fun onCourseWordClicked(clickedWord: Word?) {
+		if (clickedWord != null && clickedWord.count > 0) {
+			val filteredSentences = sentences.filter { SentenceData.cleanWord(it.sentence).contains(Regex("\\b" + clickedWord.word + "\\b")) }
+			view.setSentenceListViewItems(FXCollections.observableList(filteredSentences))
+			view.refreshSentenceListView()
+		} else {
+			view.setSentenceListViewItems(sentences)
+			view.refreshSentenceListView()
+		}
+	}
+
 	// get text
 
 	override fun getSentenceItemText(sentence: Sentence?, empty: Boolean): String? {
@@ -74,8 +91,10 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun getWordItemText(word: Word?, empty: Boolean): String? {
 		var text: String? = null
-		if (!empty && word != null) {
-			text = String.format("%d) %s - %d", words!!.indexOf(word) + 1, word.word.replace(" ", ""), word.count)
+		if (!empty && word != null && word.count != 0) {
+			text = String.format("%d) %s - %d", words!!.indexOf(word), word.word.replace(" ", ""), word.count)
+		} else {
+			text = "- RESET -"
 		}
 		return text
 	}

@@ -96,6 +96,7 @@ class MainController : MainControllerContract.View {
 		}
 		// create click listener for words
 		courseWordListView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
+			presenter.onCourseWordClicked(newValue)
 			if (newValue != null) {
 				val clickedWord = courseWordListView.selectionModel.selectedItem
 				curWord = clickedWord
