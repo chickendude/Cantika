@@ -67,6 +67,8 @@ class SentenceData {
 		words.clear()
 		wordMap.forEach { word, count -> words.add(Word(word, count)) }
 		words.sortWith(Comparator.comparingInt<Word>({ it.count }).reversed())
+		// add an empty word to stand as the reset button at the top
+		words.add(0, Word("", 0))
 	}
 
 

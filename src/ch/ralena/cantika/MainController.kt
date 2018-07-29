@@ -38,6 +38,8 @@ class MainController : MainControllerContract.View {
 	@FXML
 	private lateinit var sentenceListView: ListView<Sentence>
 	@FXML
+	private lateinit var courseWordSearchView: TextField
+	@FXML
 	private lateinit var courseWordListView: ListView<Word>
 	@FXML
 	private lateinit var frequencyWordListView: ListView<FrequencyWord>

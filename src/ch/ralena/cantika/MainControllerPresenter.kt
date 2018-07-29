@@ -38,11 +38,9 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 	}
 
 	override fun loadWords() {
-		words = FXCollections.observableArrayList()
-		words!!.add(Word("", 0))
-		words!!.addAll(sentenceData.words)
+		words = sentenceData.words
 		frequencyWords = frequencyWordData.frequencyWords
-		view.setCourseWordListViewItems(words!!)
+		view.setCourseWordListViewItems(sentenceData.words)
 		view.setFrequencyWordListViewItems(frequencyWordData.frequencyWords)
 	}
 
