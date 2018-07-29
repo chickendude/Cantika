@@ -19,10 +19,12 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 	// fields
 	private lateinit var sentences: ObservableList<Sentence>
 
-	private var words: ObservableList<Word> = FXCollections.emptyObservableList()
+	private var words: ObservableList<Word>? = null
 	private var frequencyWords: ObservableList<FrequencyWord>? = null
 	private var curSentence: Sentence? = null
-
+	private var curSentenceOriginalText: String? = null
+	private var wasModified: Boolean = false
+	private var loadingSentence = false
 
 	init {
 		sentenceData.isModified = false
@@ -37,10 +39,10 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun loadWords() {
 		words = FXCollections.observableArrayList()
-		words.add(Word("", 0))
-		words.addAll(sentenceData.words)
+		words!!.add(Word("", 0))
+		words!!.addAll(sentenceData.words)
 		frequencyWords = frequencyWordData.frequencyWords
-		view.setCourseWordListViewItems(words)
+		view.setCourseWordListViewItems(words!!)
 		view.setFrequencyWordListViewItems(frequencyWordData.frequencyWords)
 	}
 
@@ -48,14 +50,19 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun onSentenceClicked(clickedSentence: Sentence?) {
 		if (clickedSentence != null) {
+			loadingSentence = true
 			curSentence = clickedSentence
+			curSentenceOriginalText = curSentence!!.sentence
+			wasModified = sentenceData.isModified
 			view.setSentenceEditText(clickedSentence.sentence, true)
+			loadingSentence = false
 		}
 	}
 
 	override fun onSentenceChanged(text: String?) {
 		// update window title with * if a sentence has been modified
-		sentenceData.isModified = text != curSentence!!.sentence || sentenceData.isModified
+		if (!loadingSentence)
+			sentenceData.isModified = text != curSentenceOriginalText!! || wasModified
 		view.setUnsavedChanges(sentenceData.isModified)
 		// change the sentence value
 		curSentence!!.sentence = text!!
