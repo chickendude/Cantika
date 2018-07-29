@@ -30,7 +30,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		sentenceData.isModified = false
 	}
 
-	// loading
+	// --- loading
 
 	override fun loadSentences() {
 		sentences = sentenceData.sentences
@@ -46,7 +46,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		view.setFrequencyWordListViewItems(frequencyWordData.frequencyWords)
 	}
 
-	// listeners
+	// --- listeners
 
 	override fun onSentenceClicked(clickedSentence: Sentence?) {
 		if (clickedSentence != null) {
@@ -77,7 +77,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun onCourseWordClicked(clickedWord: Word?) {
 		if (clickedWord != null && clickedWord.count > 0) {
-			val filteredSentences = sentences.filter { SentenceData.cleanWord(it.sentence).contains(Regex("\\b" + clickedWord.word + "\\b")) }
+			val filteredSentences = sentences.filter { it.sentence.contains(Regex("\\b" + clickedWord.word + "\\b")) }
 			view.setSentenceListViewItems(FXCollections.observableList(filteredSentences))
 			view.refreshSentenceListView()
 		} else {
@@ -86,7 +86,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		}
 	}
 
-	// get text
+	// --- get text
 
 	override fun getSentenceItemText(sentence: Sentence?, empty: Boolean): String? {
 		var text: String? = null
@@ -117,7 +117,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		return text
 	}
 
-	// i/o
+	// --- i/o
 
 	override fun saveSentences() {
 		view.setWindowTitle(Main.WINDOW_TITLE)
@@ -128,7 +128,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		}
 	}
 
-	// private
+	// --- private
 
 	private fun loadAnalysisData() {
 		var sentenceAnalysis: String? = null
