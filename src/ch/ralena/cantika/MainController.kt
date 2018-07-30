@@ -58,7 +58,7 @@ class MainController : MainControllerContract.View {
 		setupSentenceListView()
 		setupWordListViews()
 		setupSentenceEdit()
-
+		setupCourseWordSearch()
 		presenter.loadSentences()
 		presenter.loadWords()
 
@@ -66,7 +66,6 @@ class MainController : MainControllerContract.View {
 		originalValue = sentenceEdit.text
 		words = SentenceData.instance.words
 	}
-
 
 	private fun setupSentenceListView() {
 		sentenceListView.selectionModel.selectionMode = SelectionMode.MULTIPLE
@@ -91,8 +90,13 @@ class MainController : MainControllerContract.View {
 		courseWordListView.setCellFactory { param ->
 			object : ListCell<Word>() {
 				override fun updateItem(word: Word?, empty: Boolean) {
-					super.updateItem(item, empty)
-					text = presenter.getWordItemText(word, empty)
+					super.updateItem(word, empty)
+					if (empty || item == null) {
+						text = null
+						graphic = null
+					} else {
+						text = presenter.getWordItemText(word, empty)
+					}
 				}
 			}
 		}
@@ -111,8 +115,13 @@ class MainController : MainControllerContract.View {
 		frequencyWordListView.setCellFactory { param ->
 			object : ListCell<FrequencyWord>() {
 				override fun updateItem(word: FrequencyWord?, empty: Boolean) {
-					super.updateItem(item, empty)
-					text = presenter.getFrequencyWordItemText(word, empty)
+					super.updateItem(word, empty)
+					if (empty || item == null) {
+						text = null
+						graphic = null
+					} else {
+						text = presenter.getFrequencyWordItemText(word, empty)
+					}
 				}
 			}
 		}
@@ -131,6 +140,10 @@ class MainController : MainControllerContract.View {
 		sentenceEdit.textProperty().addListener { observable: ObservableValue<out String>, oldValue: String, newValue: String ->
 			presenter.onSentenceChanged(newValue)
 		}
+	}
+
+	private fun setupCourseWordSearch() {
+		courseWordSearchView.textProperty().addListener{ observable, oldValue, newValue -> presenter.onCourseWordSearchChanged(newValue) }
 	}
 
 	@FXML

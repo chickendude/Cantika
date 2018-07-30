@@ -57,6 +57,11 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 		}
 	}
 
+	override fun onCourseWordSearchChanged(text: String) {
+		val filteredWords = words!!.filter { it.word.contains(text) }
+		view.setCourseWordListViewItems(FXCollections.observableArrayList(filteredWords))
+	}
+
 	override fun onSentenceChanged(text: String?) {
 		// update window title with * if a sentence has been modified
 		if (!loadingSentence)
