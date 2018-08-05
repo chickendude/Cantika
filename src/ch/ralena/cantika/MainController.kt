@@ -235,6 +235,8 @@ class MainController : MainControllerContract.View {
 		sentenceListView.refresh()
 	}
 
+	// Setters
+
 	override fun setAnalysisLabelText(text: String) {
 		analysisLabel.text = text
 	}

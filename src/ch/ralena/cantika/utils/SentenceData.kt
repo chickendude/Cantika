@@ -41,6 +41,7 @@ class SentenceData {
 
 	@Throws(IOException::class)
 	fun saveSentences() {
+		isModified = false
 		val path = Paths.get(filename)
 		val bw = Files.newBufferedWriter(path)
 		for (item in sentences) {
