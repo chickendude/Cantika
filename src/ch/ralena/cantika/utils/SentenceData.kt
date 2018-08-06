@@ -56,7 +56,7 @@ class SentenceData {
 	fun countWords() {
 		val wordMap = HashMap<String, Int>()
 		sentences.forEach {
-			getFullWords(it.sentence).forEach {word ->
+			getFullWords(it.sentence).forEach { word ->
 				if (!word.contains("_") && word.isNotEmpty()) {
 					var timesSeen = wordMap.getOrDefault(word, 0)
 					timesSeen++
@@ -91,7 +91,12 @@ class SentenceData {
 				sentence.trim().split(" ").filter {
 					removePunctuation(it).last() == num
 				}.forEach {
-					cleanWord += removeNonLetters(it)
+					val curWord = removeNonLetters(it)
+					// check if it's a reduplicated verb form (e.g. 知唔知道)
+					if (curWord.startsWith(cleanWord))
+						cleanWord = curWord
+					else
+						cleanWord += curWord
 				}
 			}
 
