@@ -81,7 +81,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 
 	override fun onCourseWordClicked(clickedWord: Word?) {
 		if (clickedWord != null && clickedWord.count > 0) {
-			val filteredSentences = sentences.filter { it.sentence.contains(Regex("\\b" + clickedWord.word + "\\b")) }
+			val filteredSentences = sentences.filter { SentenceData.getFullWords(it.sentence).contains(clickedWord.word) }
 			view.setSentenceListViewItems(FXCollections.observableList(filteredSentences))
 			view.refreshSentenceListView()
 		} else {

@@ -56,8 +56,7 @@ class SentenceData {
 	fun countWords() {
 		val wordMap = HashMap<String, Int>()
 		sentences.forEach {
-			it.sentence.split(" ").distinct().forEach {
-				val word = removePunctuation(it)
+			getFullWords(it.sentence).forEach {word ->
 				if (!word.contains("_") && word.isNotEmpty()) {
 					var timesSeen = wordMap.getOrDefault(word, 0)
 					timesSeen++
