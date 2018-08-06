@@ -2,7 +2,7 @@ package ch.ralena.cantika
 
 import ch.ralena.cantika.MainControllerContract.View
 import ch.ralena.cantika.objects.*
-import ch.ralena.cantika.utils.CLEAN_WORD
+import ch.ralena.cantika.utils.REGEX_PUNCT
 import ch.ralena.cantika.utils.FrequencyWordData
 import ch.ralena.cantika.utils.SentenceData
 import javafx.collections.FXCollections
@@ -140,7 +140,9 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 			view.clearSentenceDetailHBox()
 			val words = curSentence!!.sentence.split(" ")
 			for (word in words) {
-				val timesUsed = countTimesUsed(word, sentences.indexOf(curSentence))
+				val cleanWord = SentenceData.getFullWord(word, curSentence!!.sentence)
+
+				val timesUsed = countTimesUsed(cleanWord, sentences.indexOf(curSentence))
 				sentenceAnalysis = "" + timesUsed
 
 				// set up textfield's initial width
@@ -179,10 +181,9 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 	}
 
 	private fun countTimesUsed(word: String, index: Int): Int {
-		val clean_word = word.replace(CLEAN_WORD, "")
 		var count = 0
 		sentences.subList(0, index).forEach {
-			if (it.sentence.replace(CLEAN_WORD, "").split(" ").contains(clean_word)) {
+			if (SentenceData.getFullWords(it.sentence).contains(word)) {
 				count++
 			}
 		}

@@ -11,7 +11,7 @@ import java.nio.file.Paths
 import java.util.Comparator
 import java.util.HashMap
 
-val CLEAN_WORD = Regex("[，？！。“”-]")
+val REGEX_PUNCT = Regex("[，？！。“”-]")
 
 class SentenceData {
 	// fields
@@ -57,7 +57,7 @@ class SentenceData {
 		val wordMap = HashMap<String, Int>()
 		sentences.forEach {
 			it.sentence.split(" ").distinct().forEach {
-				val word = cleanWord(it)
+				val word = removePunctuation(it)
 				if (!word.contains("_") && word.isNotEmpty()) {
 					var timesSeen = wordMap.getOrDefault(word, 0)
 					timesSeen++
@@ -74,8 +74,39 @@ class SentenceData {
 
 
 	companion object {
-		fun cleanWord(word: String):String {
-			return word.replace(CLEAN_WORD,"")
+		fun removePunctuation(word: String): String {
+			return word.dropWhile { !it.isLetter() }.dropLastWhile { !it.isLetterOrDigit() }
+		}
+
+		fun removeNonLetters(word: String): String {
+			return word.dropLastWhile { !it.isLetter() }
+		}
+
+		fun getFullWord(word: String, sentence: String): String {
+			var cleanWord = removePunctuation(word)
+
+			// check if the word has a digit and if so get the full word instead of the split word
+			if (cleanWord.isNotEmpty() && cleanWord.last().isDigit()) {
+				val num = cleanWord.last()
+				cleanWord = ""
+				sentence.trim().split(" ").filter {
+					removePunctuation(it).last() == num
+				}.forEach {
+					cleanWord += removeNonLetters(it)
+				}
+			}
+
+			return cleanWord
+		}
+
+		fun getFullWords(sentence: String): Set<String> {
+			val wordSet = HashSet<String>()
+			sentence.split(" ").forEach {
+				val cleanWord = getFullWord(it, sentence)
+				if (cleanWord.isNotEmpty())
+					wordSet.add(cleanWord)
+			}
+			return wordSet
 		}
 
 		var instance = SentenceData()
