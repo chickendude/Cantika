@@ -16,6 +16,7 @@ interface MainControllerContract {
 		// list
 		fun addToSentenceDetailHBox(vBox: VBox)
 		fun refreshSentenceListView()
+		fun refreshCourseWordListView()
 		fun setCourseWordListViewItems(words: ObservableList<Word>)
 		fun setFrequencyWordListViewItems(words: ObservableList<FrequencyWord>)
 		fun setSentenceListViewItems(sentences: ObservableList<Sentence>)

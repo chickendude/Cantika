@@ -235,6 +235,10 @@ class MainController : MainControllerContract.View {
 		sentenceListView.refresh()
 	}
 
+	override fun refreshCourseWordListView() {
+		courseWordListView.refresh()
+	}
+
 	// Setters
 
 	override fun setAnalysisLabelText(text: String) {

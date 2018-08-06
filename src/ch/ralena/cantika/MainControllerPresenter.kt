@@ -76,6 +76,7 @@ class MainControllerPresenter(private val view: View, private var sentenceData: 
 	override fun onRefreshButtonClicked() {
 		sentenceData.countWords()
 		frequencyWordData.countWords(sentences)
+		view.refreshCourseWordListView()
 	}
 
 	override fun onCourseWordClicked(clickedWord: Word?) {
